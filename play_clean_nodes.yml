@@ -1,5 +1,6 @@
 ---
 - hosts: all
+  vars_files: "vars/{{ env }}_vars.yml"
   tasks:
     - name: delete docker content created by Kub
       command: docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)
