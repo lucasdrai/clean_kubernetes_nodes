@@ -6,14 +6,20 @@
       shell: "docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)"
       ignore_errors: yes
 
-    - name: unmount partitions created by Kub
-      shell: "for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do umount $mount; done"
-      ignore_errors: yes
+    - name: get list of mounted path
+      shell: "mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher"
+      register: list_mounted_path
+
+    - name: display registered variable
+      debug:
+        msg: "{{ item }}"
+      loop: "{{ list_mounted_path.stdout_lines }}"
 
     - name: clean up directories
-      shell: "rm -rf {{ item }}"
+      file:
+        path: "{{ item }}"
+        state: absent
       loop: "{{ directories_to_clean }}"
-      ignore_errors: yes
 
     - name: Attempting reboot
       shell: reboot
