@@ -13,7 +13,7 @@
     - name: clean up directories
       shell: "rm -rf {{ item }}"
       loop: "{{ directories_to_clean }}"
-      ignore errors: yes
+      ignore_errors: yes
 
     - name: Attempting reboot
       shell: reboot
