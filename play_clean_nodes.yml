@@ -3,13 +3,13 @@
   vars_files: "vars/{{ env }}_vars.yml"
   tasks:
     - name: delete docker content created by Kub
-      command: "docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)"
+      shell: "docker rm -f $(docker ps -qa) && docker rmi -f $(docker images -q) && docker volume rm $(docker volume ls -q)"
 
     - name: unmount partitions created by Kub
-      command: "for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do umount $mount; done"
+      shell: "for mount in $(mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher; do umount $mount; done"
 
     - name: clean up directories
-      command: "rm -rf {{ item }}"
+      shell: "rm -rf {{ item }}"
       loop: "{{ directories_to_clean }}"
 
     - name: Attempting reboot
