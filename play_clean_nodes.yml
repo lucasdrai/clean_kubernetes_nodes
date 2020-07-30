@@ -9,17 +9,20 @@
     - name: get list of mounted path
       shell: "mount | grep tmpfs | grep '/var/lib/kubelet' | awk '{ print $3 }') /var/lib/kubelet /var/lib/rancher"
       register: list_mounted_path
+      ignore_errors: yes
 
     - name: display registered variable
       debug:
         msg: "{{ item }}"
       loop: "{{ list_mounted_path.stdout_lines }}"
+      ignore_errors: yes
 
     - name: clean up directories
       file:
         path: "{{ item }}"
         state: absent
       loop: "{{ directories_to_clean }}"
+      ignore_errors: yes
 
     - name: Attempting reboot
       shell: reboot
