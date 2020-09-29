@@ -3,7 +3,7 @@ directories_to_clean:
   - "/etc/cni"
   - "/etc/kubernetes"
   - "/opt/cni"
-  - "/opt/rke"
+#  - "/opt/rke"
   - "/run/secrets/kubernetes.io"
   - "/run/calico"
   - "/run/flannel"
