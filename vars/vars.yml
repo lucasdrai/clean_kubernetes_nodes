@@ -1,2 +1,3 @@
 rancher_url_api_dev_app: 'https://rancher-dev.groupement.systeme-u.fr/v3'
-rancher_url_api: "{{ lookup('vars', env + '-' + dc_type + '-' + cluster_role) }}"
+rancher_url_api: "{{ env }}-{{ dc_type }}-{{ cluster_role }}"
+#"{{ lookup('vars', env + '-' + dc_type + '-' + cluster_role) }}"
