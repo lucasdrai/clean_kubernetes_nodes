@@ -1,0 +1,2 @@
+dev_rancher_url_api: 'https://rancher-dev.groupement.systeme-u.fr/v3'
+rancher_url_api: "{{ env }}_rancher_url_api"
